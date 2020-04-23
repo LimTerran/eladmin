@@ -80,7 +80,8 @@ CREATE TABLE `dept`  (
   `pid` bigint(20) NOT NULL COMMENT '上级部门',
   `enabled` bit(1) NOT NULL COMMENT '状态',
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建日期',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `idx_pid` (`pid`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门' ROW_FORMAT = Compact;
 
 -- ----------------------------
@@ -103,7 +104,8 @@ CREATE TABLE `dict`  (
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '字典名称',
   `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建日期',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `idx_name` (`name`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '数据字典' ROW_FORMAT = Compact;
 
 -- ----------------------------
@@ -121,7 +123,7 @@ CREATE TABLE `dict_detail`  (
   `id` bigint(11) NOT NULL AUTO_INCREMENT,
   `label` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '字典标签',
   `value` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '字典值',
-  `sort` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '排序',
+  `sort` smallint(6) NULL DEFAULT NULL COMMENT '排序',
   `dict_id` bigint(11) NULL DEFAULT NULL COMMENT '字典id',
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建日期',
   PRIMARY KEY (`id`) USING BTREE,
@@ -132,12 +134,12 @@ CREATE TABLE `dict_detail`  (
 -- ----------------------------
 -- Records of dict_detail
 -- ----------------------------
-INSERT INTO `dict_detail` VALUES (1, '激活', 'true', '1', 1, '2019-10-27 20:31:36');
-INSERT INTO `dict_detail` VALUES (2, '禁用', 'false', '2', 1, NULL);
-INSERT INTO `dict_detail` VALUES (3, '启用', 'true', '1', 4, NULL);
-INSERT INTO `dict_detail` VALUES (4, '停用', 'false', '2', 4, '2019-10-27 20:31:36');
-INSERT INTO `dict_detail` VALUES (5, '启用', 'true', '1', 5, NULL);
-INSERT INTO `dict_detail` VALUES (6, '停用', 'false', '2', 5, '2019-10-27 20:31:36');
+INSERT INTO `dict_detail` VALUES (1, '激活', 'true', 1, 1, '2019-10-27 20:31:36');
+INSERT INTO `dict_detail` VALUES (2, '禁用', 'false', 2, 1, NULL);
+INSERT INTO `dict_detail` VALUES (3, '启用', 'true', 1, 4, NULL);
+INSERT INTO `dict_detail` VALUES (4, '停用', 'false', 2, 4, '2019-10-27 20:31:36');
+INSERT INTO `dict_detail` VALUES (5, '启用', 'true', 1, 5, NULL);
+INSERT INTO `dict_detail` VALUES (6, '停用', 'false', 2, 5, '2019-10-27 20:31:36');
 
 -- ----------------------------
 -- Table structure for email_config
@@ -591,7 +593,7 @@ CREATE TABLE `quartz_log`  (
   `params` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `time` bigint(20) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 288 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '定时任务日志' ROW_FORMAT = Compact;
+) ENGINE = MyISAM AUTO_INCREMENT = 288 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '定时任务日志' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for role
